@@ -28,10 +28,6 @@ class EasyMultipartMailerTest < ActionMailer::TestCase
     end
   end
   
-  setup do
-    TestMailer.template_root = File.join(Rails.root, "test/files/views/")
-  end
-  
   test "sending a multipart email" do
     TestMailer.deliver_test
     assert_emails 1
@@ -96,9 +92,7 @@ class EasyMultipartMailerTest < ActionMailer::TestCase
   end
   
   test "a multipart email with a related image has the expected parts" do
-    with_rails_public_path(File.join(Rails.root, "test/files")) do
-      TestMailer.deliver_test_with_related_image
-    end
+    TestMailer.deliver_test_with_related_image
     
     email = ActionMailer::Base.deliveries.first
     assert_equal  1,                    email.parts.length
@@ -130,9 +124,7 @@ class EasyMultipartMailerTest < ActionMailer::TestCase
   end
   
   test "a multipart email with a related image with options passes them to image_tag" do
-    with_rails_public_path(File.join(Rails.root, "test/files")) do
-      TestMailer.deliver_test_with_related_image(:alt => 'test image')
-    end
+    TestMailer.deliver_test_with_related_image(:alt => 'test image')
     
     email = ActionMailer::Base.deliveries.first
     assert_equal  1,                    email.parts.length
@@ -143,18 +135,5 @@ class EasyMultipartMailerTest < ActionMailer::TestCase
     assert_equal  "inline",             html_part['content-disposition'].to_s
     
     assert_match /<img[^>]+alt=".+?"[^>]+>/,    html_part.body
-  end
-  
-  def with_rails_public_path(rails_root)
-    old_rails = Object.const_get(:Rails) rescue nil
-    mod = Object.const_set(:Rails, Module.new)
-    (class << mod; self; end).instance_eval do
-      define_method(:root) { old_rails.root }
-      define_method(:public_path) { "#{rails_root}/public" }
-    end
-    yield
-  ensure
-    Object.module_eval { remove_const(:Rails) } if defined?(Rails)
-    Object.const_set(:Rails, old_rails) if old_rails
   end
 end

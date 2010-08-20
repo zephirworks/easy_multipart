@@ -9,10 +9,6 @@ class MailerTest < ActionMailer::TestCase
     end
   end
   
-  setup do
-    TestMailer.template_root = File.join(Rails.root, "test/files/views/")
-  end
-  
   test "sending a multipart email" do
     TestMailer.deliver_test
     assert_emails 1
