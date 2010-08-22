@@ -104,14 +104,6 @@ display correctly with:
 * Postbox
 
 
-Testing
--------
-
-To run the tests:
-
-**TODO**
-
-
 Maintainers
 -----------
 
