@@ -99,7 +99,7 @@ display correctly with:
 
 * Apple Mail
 * Gmail
-* iPhone Mail
+* iPhone Mail.app
 * Thunderbird
 * Postbox
 
