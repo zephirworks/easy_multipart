@@ -2,12 +2,8 @@
 
 [[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
 
-env
-
-if [[ -n $1 ]]; then
-    TARGETRUBY=$1
-else
-    TARGETRUBY=1.8.7
+if [[ -z ${RUBY_RUNTIME} ]]; then
+  RUBY_RUNTIME=1.8.7
 fi
 
 if [[ -n "${JOB_NAME}" ]] ; then
@@ -17,10 +13,10 @@ else
 fi
 
 if [[ -z "$(rvm list | grep $TARGETRUBY)" ]] ; then
-    rvm install $TARGETRUBY -C --with-iconv-dir=/usr/local
+    rvm install ${RUBY_RUNTIME} -C --with-iconv-dir=/usr/local
 fi
 
-rvm use $TARGETRUBY && \
+rvm use ${RUBY_RUNTIME} && \
   rvm --force gemset delete $GEMSET && \
   rvm gemset create $GEMSET && \
   rvm gemset use $GEMSET && \
