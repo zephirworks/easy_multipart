@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+set -e
+
 [[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
 
 if [[ -z ${RUBY_RUNTIME} ]]; then
@@ -7,12 +9,12 @@ if [[ -z ${RUBY_RUNTIME} ]]; then
 fi
 
 if [[ -n "${JOB_NAME}" ]] ; then
-  GEMSET=`echo ${JOB_NAME} | sed "s/ /_/g"`
+  GEMSET=`echo ${JOB_NAME} | sed "s!/RUBY_RUNTIME=.*!!" | sed "s/ /_/g"`
 else
   GEMSET=easy_multipart
 fi
 
-if [[ -z "$(rvm list | grep $TARGETRUBY)" ]] ; then
+if [[ -z "$(rvm list | grep $RUBY_RUNTIME)" ]] ; then
     rvm install ${RUBY_RUNTIME} -C --with-iconv-dir=/usr/local
 fi
 
