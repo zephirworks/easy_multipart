@@ -104,6 +104,19 @@ display correctly with:
 * Postbox
 
 
+Supported platforms
+-----------
+
+
+This gem has been tested on:
+
+* rails 2.3.8 with ruby 1.8.7-p302
+* rails 2.3.8 with ruby 1.9.2-p0
+
+All supported platforms are continually tested with Hudson.
+A port to Rails 3 is on the way.
+
+
 Maintainers
 -----------
 
